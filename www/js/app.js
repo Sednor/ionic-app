@@ -5,8 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 
 var firebaseConfig = {
-    url: "https://ionic-app-940d2.firebaseio.com"
+    apiKey: "AIzaSyAtpDK8kXZ4R1_PF7Sn09lNgYsuQE3gFQM",
+    authDomain: "ionic-app-940d2.firebaseapp.com",
+    databaseURL: "https://ionic-app-940d2.firebaseio.com",
+    storageBucket: "ionic-app-940d2.appspot.com"
 };
+firebase.initializeApp(firebaseConfig);
 
 angular.module('starter', ['ionic', 'firebase'])
 
@@ -29,13 +33,12 @@ angular.module('starter', ['ionic', 'firebase'])
     })
 
     .factory("Items", function ($firebaseArray) {
-        var itemsRef = new Firebase(firebaseConfig.url + "/items");
+        var itemsRef = firebase.database().ref("/items");
         return $firebaseArray(itemsRef);
     })
 
-    .factory("Auth", function($firebaseAuth) {
-        var usersRef = new Firebase(firebaseConfig.url + "/users");
-        return $firebaseAuth(usersRef);
+    .factory("Auth", function ($firebaseAuth) {
+        return $firebaseAuth(firebase.auth());
     })
 
     .controller("ListCtrl", function ($scope, Items, Auth) {
@@ -51,7 +54,25 @@ angular.module('starter', ['ionic', 'firebase'])
             }
         };
 
-        $scope.login = function() {
-            Auth.$authWithOAuthRedirect("google");
+        $scope.login = function () {
+            Auth.$signInWithPopup("google").then(function (authData) {
+                console.log(authData);
+                $scope.authData = authData;
+            }).catch(function (error) {
+                console.error("Authentication failed:");
+                console.error(error);
+                console.error(error.code);
+
+                if (error.code === "TRANSPORT_UNAVAILABLE") {
+                    Auth.$signInWithRedirect("google").then(function (authData) {
+                        console.log(authData);
+                        $scope.authData = authData;
+                    }).catch(function (error) {
+                        console.error("Authentication failed:");
+                        console.error(error);
+                        console.error(error.code);
+                    });
+                }
+            });
         };
     });
