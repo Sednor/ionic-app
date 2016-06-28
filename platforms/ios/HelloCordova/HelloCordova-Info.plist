@@ -173,8 +173,45 @@
     </array>
     <key>NSAppTransportSecurity</key>
     <dict>
+      <key>NSExceptionDomains</key>
+      <dict>
+        <key>accounts.google.com</key>
+        <dict/>
+      </dict>
       <key>NSAllowsArbitraryLoads</key>
       <true/>
     </dict>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>com.ionicframework.starter</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.ionicframework.starter</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>REVERSED_CLIENT_ID</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.750695814854-7q4ivjcj67nfbg402gh4mcr17vlqb2ti</string>
+        </array>
+      </dict>
+    </array>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>com.ionicframework.starter</string>
+      <string>com.googleusercontent.apps.750695814854-7q4ivjcj67nfbg402gh4mcr17vlqb2ti</string>
+      <string>com-google-gidconsent</string>
+      <string>com-google-gidconsent-google</string>
+      <string>com.google.gppconsent.2.4.0</string>
+      <string>com.google.gppconsent.2.4.1</string>
+    </array>
   </dict>
 </plist>

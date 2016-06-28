@@ -35,7 +35,7 @@
 </ion-header-bar>
 
 <ion-content>
-    <div ng-hide="authData" class="card" ng-click="login()">
+    <div ng-hide="authData" class="card" ng-click="googleLogin()">
         <button class="item">
             Log In with Google
         </button>
@@ -43,8 +43,14 @@
 
     <div class="card" ng-show="authData">
         <div class="item item-text-wrap">
-            Hello {{authData.user.displayName}}!
+            Hello {{authData.displayName || authData.email}}!
         </div>
+    </div>
+
+    <div class="card" ng-show="authData">
+        <button class="item" ng-click="googleLogout()">
+            Logout
+        </button>
     </div>
     <ion-list>
         <ion-item ng-repeat="item in items">
