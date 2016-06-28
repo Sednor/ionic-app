@@ -54,25 +54,38 @@ angular.module('starter', ['ionic', 'firebase'])
             }
         };
 
-        $scope.login = function () {
-            Auth.$signInWithPopup("google").then(function (authData) {
-                console.log(authData);
-                $scope.authData = authData;
-            }).catch(function (error) {
-                console.error("Authentication failed:");
-                console.error(error);
-                console.error(error.code);
+        $scope.googleLogin = function () {
+            window.plugins.googleplus.login(
+                {
+                    'webApiKey': '750695814854-bdpl23blukhkljdf12g1nshthidvl07c.apps.googleusercontent.com'
+                },
+                function (authData) {
+                    console.log(JSON.stringify(authData));
+                    $scope.authData = authData;
 
-                if (error.code === "TRANSPORT_UNAVAILABLE") {
-                    Auth.$signInWithRedirect("google").then(function (authData) {
-                        console.log(authData);
-                        $scope.authData = authData;
-                    }).catch(function (error) {
-                        console.error("Authentication failed:");
-                        console.error(error);
-                        console.error(error.code);
+                    var credential = firebase.auth.GoogleAuthProvider.credential(authData.idToken);
+
+                    firebase.auth().signInWithCredential(credential).catch(function (error) {
+                        console.error(JSON.stringify(error));
                     });
+
+                    $scope.$digest();
+                },
+                function (msg) {
+                    console.error(msg);
                 }
-            });
+            );
         };
+
+        $scope.googleLogout = function () {
+            window.plugins.googleplus.logout(
+                function (msg) {
+                    console.log(msg);
+                    $scope.authData = null;
+                    $scope.$digest();
+                }
+            );
+        };
+
+
     });
