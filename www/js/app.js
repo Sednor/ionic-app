@@ -60,6 +60,16 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
                         controller : 'WatsonCtrl'
                     }
                 }
+            })
+        
+            .state('app.profile', {
+                url: '/profile',
+                views: {
+                    'menuContent' : {
+                        templateUrl : 'templates/profile.html',
+                        controller : 'ProfileCtrl'
+                    }
+                }
             });
         
         $urlRouterProvider.otherwise('/app/watson-api');
