@@ -14,8 +14,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.googleLogin = function () {
-        window.plugins.googleplus.login(
-            {
+        window.plugins.googleplus.login({
                 'webApiKey': '750695814854-bdpl23blukhkljdf12g1nshthidvl07c.apps.googleusercontent.com'
             },
             function (authData) {

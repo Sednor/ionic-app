@@ -39,7 +39,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
                 url: '/app',
                 abstract: true,
                 templateUrl: 'templates/menu.html',
-                controller: 'AuthCtrl'
+                controller: 'AppCtrl'
             })
         
             .state('app.login', {
@@ -47,7 +47,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
                 views : {
                     'menuContent' : {
                         templateUrl : 'templates/login.html',
-                        controller: 'AppCtrl'
+                        controller: 'AuthCtrl'
                     }
                 }
             })
@@ -62,7 +62,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
                 }
             });
         
-        $urlRouterProvider.otherwise('/app/login');
+        $urlRouterProvider.otherwise('/app/watson-api');
     })
 
     .factory("Items", function ($firebaseArray) {
