@@ -12,7 +12,7 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-angular.module('starter', ['ionic', 'firebase'])
+angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -32,6 +32,39 @@ angular.module('starter', ['ionic', 'firebase'])
         });
     })
 
+    .config(function ($stateProvider, $urlRouterProvider) {
+        $stateProvider
+        
+            .state('app', {
+                url: '/app',
+                abstract: true,
+                templateUrl: 'templates/menu.html',
+                controller: 'AuthCtrl'
+            })
+        
+            .state('app.login', {
+                url: '/login',
+                views : {
+                    'menuContent' : {
+                        templateUrl : 'templates/login.html',
+                        controller: 'AppCtrl'
+                    }
+                }
+            })
+
+            .state('app.watson-api', {
+                url: '/watson-api',
+                views: {
+                    'menuContent' : {
+                        templateUrl : 'templates/watson-api.html',
+                        controller : 'WatsonCtrl'
+                    }
+                }
+            });
+        
+        $urlRouterProvider.otherwise('/app/login');
+    })
+
     .factory("Items", function ($firebaseArray) {
         var itemsRef = firebase.database().ref("/items");
         return $firebaseArray(itemsRef);
@@ -39,53 +72,4 @@ angular.module('starter', ['ionic', 'firebase'])
 
     .factory("Auth", function ($firebaseAuth) {
         return $firebaseAuth(firebase.auth());
-    })
-
-    .controller("ListCtrl", function ($scope, Items, Auth) {
-
-        $scope.items = Items;
-
-        $scope.addItem = function () {
-            var name = prompt("What do you need to buy?");
-            if (name) {
-                $scope.items.$add({
-                    "name": name
-                });
-            }
-        };
-
-        $scope.googleLogin = function () {
-            window.plugins.googleplus.login(
-                {
-                    'webApiKey': '750695814854-bdpl23blukhkljdf12g1nshthidvl07c.apps.googleusercontent.com'
-                },
-                function (authData) {
-                    console.log(JSON.stringify(authData));
-                    $scope.authData = authData;
-
-                    var credential = firebase.auth.GoogleAuthProvider.credential(authData.idToken);
-
-                    firebase.auth().signInWithCredential(credential).catch(function (error) {
-                        console.error(JSON.stringify(error));
-                    });
-
-                    $scope.$digest();
-                },
-                function (msg) {
-                    console.error(msg);
-                }
-            );
-        };
-
-        $scope.googleLogout = function () {
-            window.plugins.googleplus.logout(
-                function (msg) {
-                    console.log(msg);
-                    $scope.authData = null;
-                    $scope.$digest();
-                }
-            );
-        };
-
-
     });

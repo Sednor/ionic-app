@@ -1,0 +1,32 @@
+<ion-view view-title="Login">
+    <ion-header-bar class="top">
+        <h1 class="title">Items</h1>
+        <button class="button button-icon ion-plus" ng-click="addItem()">
+        </button>
+    </ion-header-bar>
+
+    <ion-content>
+        <div ng-hide="authData" class="card" ng-click="googleLogin()">
+            <button class="item">
+                Log In with Google
+            </button>
+        </div>
+
+        <div class="card" ng-show="authData">
+            <div class="item item-text-wrap">
+                Hello {{authData.displayName || authData.email}}!
+            </div>
+        </div>
+
+        <div class="card" ng-show="authData">
+            <button class="item" ng-click="googleLogout()">
+                Logout
+            </button>
+        </div>
+        <ion-list>
+            <ion-item ng-repeat="item in items">
+                {{item.name}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
