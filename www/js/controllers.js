@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
     
-.controller("AuthCtrl", function ($scope, Items, Auth) {
+.controller("AuthCtrl", function ($scope, Items) {
     
     $scope.items = Items;
 
@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
 
                 var credential = firebase.auth.GoogleAuthProvider.credential(authData.idToken);
 
-                Auth.signInWithCredential(credential).catch(function (error) {
+                firebase.auth().signInWithCredential(credential).catch(function (error) {
                     console.error(JSON.stringify(error));
                 });
 

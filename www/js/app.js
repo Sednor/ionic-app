@@ -80,6 +80,6 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
         return $firebaseArray(itemsRef);
     })
 
-    .factory("Auth", function ($firebaseAuth) {
-        return $firebaseAuth(firebase.auth());
-    });
+    //.factory("Auth", function ($firebaseAuth) {
+    //    return $firebaseAuth(firebase.auth());
+    //});
